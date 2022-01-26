@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/navigation"
+  app:startDestination="@+id/navi_search">
+
+  <fragment
+    android:id="@+id/navi_search"
+    android:label="@string/title_search"
+    android:name="com.evilstan.starwarsuniverse.ui.search.SearchFragment"
+    tools:layout="@layout/fragment_search" />
+
+  <fragment
+    android:id="@+id/navi_favorites"
+    android:label="@string/title_favorites"
+    android:name="com.evilstan.starwarsuniverse.ui.favorites.FavoritesFragment"
+    tools:layout="@layout/fragment_favorites" />
+
+</navigation>

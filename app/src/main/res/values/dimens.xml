@@ -1,0 +1,10 @@
+<resources>
+  <!-- Default screen margins, per the Android Design guidelines. -->
+  <dimen name="activity_horizontal_margin">16dp</dimen>
+  <dimen name="activity_vertical_margin">16dp</dimen>
+
+  <dimen name="search_text_size" type="dimen">20sp</dimen>
+  <dimen name="search_text_margin" type="dimen">4dp</dimen>
+
+  <dimen name="search_card_corner_radius" type="dimen">4dp</dimen>
+</resources>
