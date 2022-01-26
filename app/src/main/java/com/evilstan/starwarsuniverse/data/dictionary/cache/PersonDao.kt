@@ -1,10 +1,9 @@
 package com.evilstan.starwarsuniverse.data.dictionary.cache
 
 import androidx.room.*
-import com.evilstan.starwarsuniverse.data.dictionary.cache.PeopleCache
 
 @Dao
-interface PeopleDao {
+interface PersonDao {
     @Query("SELECT *FROM people")
     fun getPeople()
 
@@ -12,11 +11,11 @@ interface PeopleDao {
     fun getByName(name:String)
 
     @Insert
-    fun insert(peopleCache: PeopleCache)
+    fun insert(personCache: PersonCache)
 
     @Update
-    fun update(peopleCache: PeopleCache)
+    fun update(personCache: PersonCache)
 
     @Delete
-    fun delete(peopleCache: PeopleCache)
+    fun delete(personCache: PersonCache)
 }

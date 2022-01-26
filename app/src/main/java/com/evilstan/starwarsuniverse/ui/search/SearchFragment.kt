@@ -8,11 +8,12 @@ import android.widget.CompoundButton
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.evilstan.starwarsuniverse.data.dictionary.cache.PeopleCache
+import com.evilstan.starwarsuniverse.data.dictionary.cache.FilmCache
+import com.evilstan.starwarsuniverse.data.dictionary.cache.PersonCache
 import com.evilstan.starwarsuniverse.databinding.FragmentSearchBinding
 
 class SearchFragment : Fragment(),
-View.OnClickListener,
+    View.OnClickListener,
     CompoundButton.OnCheckedChangeListener {
 
     private lateinit var searchViewModel: SearchViewModel
@@ -35,8 +36,21 @@ View.OnClickListener,
     }
 
     private fun init() {
-        val dataSet: MutableList<PeopleCache> = mutableListOf()
-        val adapter:SearchAdapter = SearchAdapter(dataSet,this,this)
+        val dataSet: MutableList<PersonCache> = mutableListOf(
+            PersonCache(
+                "Hello",
+                "170",
+                "123",
+                "red",
+                "black",
+                "red",
+                "1999",
+                "Male",
+                "Earth",
+                arrayListOf(FilmCache("Help me", 4))
+            )
+        )
+        val adapter: SearchAdapter = SearchAdapter(dataSet, this, this)
         val recyclerView = binding.recycler
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this.context)
@@ -48,7 +62,7 @@ View.OnClickListener,
     }
 
     override fun onCheckedChanged(checkBox: CompoundButton, checked: Boolean) {
-        TODO("Not yet implemented")
+
     }
 
     override fun onClick(view: View) {
