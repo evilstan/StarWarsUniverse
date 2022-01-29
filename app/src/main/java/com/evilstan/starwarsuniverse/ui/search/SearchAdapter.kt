@@ -9,14 +9,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.evilstan.starwarsuniverse.R
 import com.evilstan.starwarsuniverse.data.dictionary.cache.PeopleCache
-import java.lang.Exception
 
 class SearchAdapter(
-    private val dataSet: MutableList<PeopleCache>,
+    private var dataSet: MutableList<PeopleCache>,
     private val onClickListener: View.OnClickListener,
-    private val onCheckedChangeListener: CompoundButton.OnCheckedChangeListener
+    private val onCheckedChangeListener: CompoundButton.OnCheckedChangeListener,
 
-) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
+    ) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater
@@ -48,8 +48,6 @@ class SearchAdapter(
 
         fun setCharacter(name: String) {
             nameText.text = name
-        }
-
         }
     }
 }

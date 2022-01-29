@@ -15,8 +15,7 @@
       android:id="@+id/recycler_item_name"
       style="@style/recycler_text_style"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:text="Luke Skywalker" />
+      android:layout_height="wrap_content"/>
 
     <CheckBox
       android:id="@+id/favorite_checkbox"

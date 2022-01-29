@@ -23,6 +23,7 @@
 
   <style name="recycler_card_style" parent="TextAppearance.AppCompat">
     <item name="cardCornerRadius">@dimen/search_card_corner_radius</item>
+    <item name="android:layout_marginTop">@dimen/card_vert_margin</item>
   </style>
 
   <style name="recycler_text_style" parent="TextAppearance.AppCompat">
@@ -30,4 +31,5 @@
   <item name="android:layout_marginEnd">@dimen/search_text_margin</item>
   </style>
 
+  <dimen name="card_vert_margin">4dp</dimen>
 </resources>

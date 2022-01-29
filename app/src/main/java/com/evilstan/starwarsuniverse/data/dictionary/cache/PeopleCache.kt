@@ -16,7 +16,7 @@ data class PeopleCache(
     val birth_year: String,
     val gender: String,
     val homeworld: String,
-    val films: ArrayList<FilmCloud>,
+    val films: ArrayList<FilmCache>,
 
     ) {
 
