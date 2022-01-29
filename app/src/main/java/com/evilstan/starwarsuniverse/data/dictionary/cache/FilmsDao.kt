@@ -1,7 +1,6 @@
 package com.evilstan.starwarsuniverse.data.dictionary.cache
 
 import androidx.room.*
-import com.evilstan.starwarsuniverse.data.dictionary.cache.PeopleCache
 
 interface FilmsDao {
     @Query("SELECT *FROM films")
