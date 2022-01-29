@@ -12,8 +12,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.evilstan.starwarsuniverse.data.core.PersonController
 import com.evilstan.starwarsuniverse.data.dictionary.cache.FilmCache
-import com.evilstan.starwarsuniverse.data.dictionary.cache.PeopleCache
+import com.evilstan.starwarsuniverse.data.dictionary.cache.PersonCache
 import com.evilstan.starwarsuniverse.databinding.FragmentSearchBinding
 
 
@@ -22,8 +23,8 @@ class SearchFragment : Fragment(),
     CompoundButton.OnCheckedChangeListener, TextWatcher {
 
 
-    private val dataSetOrigin: MutableList<PeopleCache> = mutableListOf()
-    private var dataSet: MutableList<PeopleCache> = mutableListOf()
+    private val dataSetOrigin: MutableList<PersonCache> = mutableListOf()
+    private var dataSet: MutableList<PersonCache> = mutableListOf()
     lateinit var adapter: SearchAdapter
     lateinit var recyclerView: RecyclerView
 
@@ -43,7 +44,6 @@ class SearchFragment : Fragment(),
         val root: View = binding.root
         init()
         initTestDataset()
-
         return root
     }
 
@@ -65,7 +65,7 @@ class SearchFragment : Fragment(),
 
     //TODO delete method!
     private fun initTestDataset() {
-        val luke = PeopleCache(
+        val luke = PersonCache(
             "Luke Skywalker",
             "175",
             "55",
@@ -77,7 +77,7 @@ class SearchFragment : Fragment(),
             "Earth",
             arrayListOf(FilmCache("HomeWorld", 4), FilmCache("Go Home", 5))
         )
-        val dart = PeopleCache(
+        val dart = PersonCache(
             "Dart Weider",
             "175",
             "55",
@@ -89,7 +89,7 @@ class SearchFragment : Fragment(),
             "Earth",
             arrayListOf(FilmCache("HomeWorld", 4), FilmCache("Go Home", 5))
         )
-        val yoda = PeopleCache(
+        val yoda = PersonCache(
             "Master Yoda",
             "175",
             "55",
@@ -120,6 +120,7 @@ class SearchFragment : Fragment(),
 
     override fun onTextChanged(charSequence: CharSequence, p1: Int, p2: Int, p3: Int) {
         filter(charSequence.toString().lowercase())
+        initRetrofit()
     }
 
     override fun afterTextChanged(editable: Editable) {
@@ -137,5 +138,10 @@ class SearchFragment : Fragment(),
             }
         }
         adapter.notifyDataSetChanged()
+    }
+
+    private fun initRetrofit() {
+        val controller = PersonController()
+        controller.start()
     }
 }

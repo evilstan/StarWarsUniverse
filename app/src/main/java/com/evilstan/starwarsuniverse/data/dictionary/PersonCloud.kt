@@ -2,7 +2,7 @@ package com.evilstan.starwarsuniverse.data.dictionary
 
 import com.google.gson.annotations.SerializedName
 
-data class PresonCloud(
+data class PersonCloud(
     @SerializedName("name")
     val name: String,
 
@@ -31,7 +31,7 @@ data class PresonCloud(
     val homeworld: String,
 
     @SerializedName("films")
-    val films: ArrayList<FilmCloud>
+    val films: ArrayList<String>
 ) {
 
 }

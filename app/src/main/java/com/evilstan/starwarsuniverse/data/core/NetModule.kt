@@ -11,6 +11,6 @@ class NetModule {
 
 
     companion object {
-        private const val BASE_URL = "https://https://swapi.dev/api/"
+        private const val BASE_URL = "https://swapi.dev/api/"
     }
 }

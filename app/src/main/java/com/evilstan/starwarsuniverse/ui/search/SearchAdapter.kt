@@ -8,10 +8,10 @@ import android.widget.CompoundButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.evilstan.starwarsuniverse.R
-import com.evilstan.starwarsuniverse.data.dictionary.cache.PeopleCache
+import com.evilstan.starwarsuniverse.data.dictionary.cache.PersonCache
 
 class SearchAdapter(
-    private var dataSet: MutableList<PeopleCache>,
+    private var dataSet: MutableList<PersonCache>,
     private val onClickListener: View.OnClickListener,
     private val onCheckedChangeListener: CompoundButton.OnCheckedChangeListener,
 
