@@ -1,6 +1,7 @@
 # StarWarsUniverse
-Test task, currently under active development
-Unfortunately, due to the high workload at the main job, I did not have time to finish the project
+
+Unfortunately, due to the high workload at the main job, finished the project in time
+
 What is implemented:
 -user interface
 - API requests
