@@ -3,7 +3,8 @@
 Unfortunately, due to the high workload at the main job, finished the project in time
 
 What is implemented:
--user interface
+
+- user interface
 - API requests
 - live search
 
