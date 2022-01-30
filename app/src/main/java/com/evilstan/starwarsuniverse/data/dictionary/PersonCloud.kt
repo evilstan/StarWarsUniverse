@@ -27,12 +27,7 @@ data class PersonCloud(
     @SerializedName("gender")
     val gender: String,
 
-    @SerializedName("homeworld")
-    val homeworld: String,
-
     @SerializedName("films")
     val films: ArrayList<String>
-) {
-
-}
+)
 

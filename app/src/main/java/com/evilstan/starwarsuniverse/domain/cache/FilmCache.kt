@@ -1,4 +1,4 @@
-package com.evilstan.starwarsuniverse.data.dictionary.cache
+package com.evilstan.starwarsuniverse.domain.cache
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

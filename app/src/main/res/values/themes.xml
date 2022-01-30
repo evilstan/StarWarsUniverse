@@ -31,5 +31,20 @@
   <item name="android:layout_marginEnd">@dimen/search_text_margin</item>
   </style>
 
-  <dimen name="card_vert_margin">4dp</dimen>
+  <style name="info_text_style" parent="TextAppearance.AppCompat">
+
+  </style>
+
+  <style name="header_style" parent="info_text_style">
+    <item name="android:textSize">@dimen/info_header_text_size</item>
+    <item name="android:layout_marginTop">@dimen/info_header_margin_top</item>
+  </style>
+
+  <style name="body_style" parent="info_text_style">
+    <item name="android:textSize">@dimen/info_body_text_size</item>
+    <item name="android:layout_marginTop">@dimen/info_body_margin_vert</item>
+    <item name="android:layout_marginBottom">@dimen/info_body_margin_vert</item>
+  </style>
+
+
 </resources>

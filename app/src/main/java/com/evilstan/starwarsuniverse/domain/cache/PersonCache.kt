@@ -1,4 +1,4 @@
-package com.evilstan.starwarsuniverse.data.dictionary.cache
+package com.evilstan.starwarsuniverse.domain.cache
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -14,10 +14,10 @@ data class PersonCache(
     val eye_color: String,
     val birth_year: String,
     val gender: String,
-    val homeworld: String,
-    val films: ArrayList<FilmCache>,
-
+    val films: ArrayList<String>,
     ) {
+
+    var favorite = false
 
     private fun filmsToString(): String {
         var saga = ""
@@ -37,7 +37,6 @@ data class PersonCache(
         "Eye color: $eye_color",
         "Birth year: $birth_year",
         "Gender: $gender",
-        "Home world: $homeworld",
         "Films: ${filmsToString()}"
     )
 }

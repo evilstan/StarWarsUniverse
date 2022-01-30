@@ -2,4 +2,17 @@
   <string name="app_name">StarWarsUniverse</string>
   <string name="title_search">Search</string>
   <string name="title_favorites">Favorites</string>
+  <string name="title_info">Details</string>
+  <string name="hint">Input your character here</string>
+
+  <string name="name">Name: </string>
+  <string name="gender">Gender: </string>
+  <string name="height">Height: </string>
+  <string name="weight">Weight: </string>
+  <string name="birt_year">Birth year: </string>
+  <string name="skin_color">Skin color: </string>
+  <string name="eye_color">Eye color: </string>
+  <string name="hair_color">Hair color: </string>
+  <string name="films">Films: </string>
+
 </resources>

@@ -6,5 +6,15 @@
   <dimen name="search_text_size" type="dimen">20sp</dimen>
   <dimen name="search_text_margin" type="dimen">4dp</dimen>
 
+  <dimen name="card_vert_margin">4dp</dimen>
+
+
+  <dimen name="info_header_text_size">32sp</dimen>
+  <dimen name="info_header_margin_top">8dp</dimen>
+  <dimen name="info_body_text_size">24sp</dimen>
+  <dimen name="info_body_margin_vert">4dp</dimen>
+
+
+
   <dimen name="search_card_corner_radius" type="dimen">4dp</dimen>
 </resources>

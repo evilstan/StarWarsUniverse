@@ -17,4 +17,14 @@
     android:name="com.evilstan.starwarsuniverse.ui.favorites.FavoritesFragment"
     tools:layout="@layout/fragment_favorites" />
 
+  <fragment
+    android:id="@+id/navi_info"
+    android:label="@string/title_info"
+    android:name="com.evilstan.starwarsuniverse.ui.info.InfoFragment"
+    tools:layout="@layout/fragment_info" />
+    <argument
+      android:name="name"
+      app:argType="string"
+      android:defaultValue=""/>
+
 </navigation>

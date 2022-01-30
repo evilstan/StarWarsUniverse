@@ -4,7 +4,7 @@ class NetModule {
 
     private val retrofit = ProvideRetrofit(
         BASE_URL,
-        ProvideOkHttpClientBuilder(ProvideInterceptor(false).interceptor())
+        ProvideGson().factory()
     ).retrofit()
 
     fun <T> service(clazz: Class<T>): T = retrofit.create(clazz)

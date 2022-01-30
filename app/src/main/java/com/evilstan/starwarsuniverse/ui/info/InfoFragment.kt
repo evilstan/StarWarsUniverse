@@ -4,41 +4,52 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.evilstan.starwarsuniverse.databinding.FragmentInfoBinding
+import java.util.*
+import kotlin.collections.ArrayList
 
-class InfoFragment : Fragment() {
+class InfoFragment() : Fragment() {
 
-    private lateinit var infoViewModel: InfoViewModel
     private var _binding: FragmentInfoBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        infoViewModel =
-            ViewModelProvider(this).get(InfoViewModel::class.java)
+    ): View {
 
         _binding = FragmentInfoBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-/*        val textView: TextView = binding.textNotifications
-        infoViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })*/
+        init()
+            parseBundle(requireArguments())
         return root
+    }
+
+    private fun parseBundle(bundle: Bundle) {
+        binding.nameValue.text = bundle.getString("name")
+        binding.heightValue.text = bundle.getString("height")
+        binding.weightValue.text = bundle.getString("mass")
+        binding.hairColorValue.text = bundle.getString("hair_color")
+        binding.skinColorValue.text = bundle.getString("skin_color")
+        binding.eyeColorValue.text = bundle.getString("eye_color")
+        binding.birtYearValue.text = bundle.getString("birth_year")
+        binding.genderValue.text = bundle.getString("gender")
+        filmsToString(bundle.getStringArrayList("films")!!)
+    }
+
+    private fun filmsToString(films: ArrayList<String>) {
+        binding.filmsValue.text = films.joinToString(", ")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun init() {
+
     }
 }

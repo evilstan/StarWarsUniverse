@@ -4,16 +4,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.CompoundButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.evilstan.starwarsuniverse.R
-import com.evilstan.starwarsuniverse.data.dictionary.cache.PersonCache
+import com.evilstan.starwarsuniverse.domain.cache.PersonCache
 
 class SearchAdapter(
     private var dataSet: MutableList<PersonCache>,
-    private val onClickListener: View.OnClickListener,
-    private val onCheckedChangeListener: CompoundButton.OnCheckedChangeListener,
+    private val onPersonClickListener: OnPersonClickListener,
 
     ) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
@@ -22,32 +20,38 @@ class SearchAdapter(
         val view = LayoutInflater
             .from(parent.context)
             .inflate(R.layout.list_item, parent, false)
-        return ViewHolder(view, onCheckedChangeListener)
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val character = dataSet[position]
-        holder.setCharacter(character.name)
-        holder.itemView.setOnClickListener(onClickListener)
+        val person = dataSet[position]
+        holder.setCharacter(person)
+        holder.itemView.setOnClickListener { onPersonClickListener.onPersonClick(person) }
+
     }
 
     override fun getItemCount() = dataSet.size
 
 
     class ViewHolder(
-        view: View,
-        onCheckedChangeListener: CompoundButton.OnCheckedChangeListener
+        view: View
     ) : RecyclerView.ViewHolder(view) {
 
         private var nameText: TextView = view.findViewById(R.id.recycler_item_name)
         private var favoriteCheckBox: CheckBox = view.findViewById(R.id.favorite_checkbox)
 
-        init {
-            favoriteCheckBox.setOnCheckedChangeListener(onCheckedChangeListener)
-        }
+        fun setCharacter(person:PersonCache) {
+            nameText.text = person.name
 
-        fun setCharacter(name: String) {
-            nameText.text = name
+            favoriteCheckBox.setOnCheckedChangeListener { checkbox, isChecked ->
+                person.favorite = isChecked
+            }
+
         }
     }
+
+    interface OnPersonClickListener {
+        fun onPersonClick(personCache: PersonCache)
+    }
+
 }
