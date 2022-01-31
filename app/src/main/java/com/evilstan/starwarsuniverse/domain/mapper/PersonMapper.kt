@@ -30,7 +30,7 @@ class PersonMapper {
 
             val job = launch {
                 for (url in urls) {
-                    cloudController.getFilm(url, callBack)
+                    //cloudController.getFilm(url, callBack)
                     if (callBack.success) {
                         films.add(filmMapper.map(callBack.filmCloud).toString())
                     }

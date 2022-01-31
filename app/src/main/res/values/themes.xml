@@ -27,8 +27,8 @@
   </style>
 
   <style name="recycler_text_style" parent="TextAppearance.AppCompat">
-  <item name="android:layout_marginStart">@dimen/search_text_margin</item>
-  <item name="android:layout_marginEnd">@dimen/search_text_margin</item>
+    <item name="android:layout_marginStart">@dimen/search_text_margin</item>
+    <item name="android:layout_marginEnd">@dimen/search_text_margin</item>
   </style>
 
   <style name="info_text_style" parent="TextAppearance.AppCompat">
@@ -44,6 +44,11 @@
     <item name="android:textSize">@dimen/info_body_text_size</item>
     <item name="android:layout_marginTop">@dimen/info_body_margin_vert</item>
     <item name="android:layout_marginBottom">@dimen/info_body_margin_vert</item>
+  </style>
+
+  <style name="text_default_style" parent="TextAppearance.AppCompat">
+    <item name="android:textSize">@dimen/default_text_style</item>
+    <item name="android:layout_marginTop">@dimen/default_margin_vert</item>
   </style>
 
 

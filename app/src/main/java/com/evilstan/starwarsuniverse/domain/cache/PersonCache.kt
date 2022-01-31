@@ -1,9 +1,8 @@
 package com.evilstan.starwarsuniverse.domain.cache
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
 
-@Entity(tableName = "people")
+@Entity(tableName = "persons")
 data class PersonCache(
     @PrimaryKey
     val name: String,
