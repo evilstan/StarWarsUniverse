@@ -9,7 +9,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 import retrofit2.http.Url
 
-interface StarWarsApi {
+interface StarWarsApi {/*
     @GET("people/")
     fun search(@Query("search") search:String):Call<PeopleCloud>
 
@@ -17,5 +17,17 @@ interface StarWarsApi {
     fun getPersonByIndex(@Path("index") index:Int):Call<PersonCloud>
 
     @GET("{fullUrl}")
+    fun getFilm(@Path(value = "fullUrl", encoded = true ) fullUrl:String):Call<FilmCloud>*/
+
+
+    @GET("people/")
+    suspend fun search(@Query("search") search:String):ResponseWrapper<ArrayList<PersonCloud>>
+
+    @GET("people/{index}")
+    fun getPersonByIndex(@Path("index") index:Int):Call<PersonCloud>
+
+    @GET("{fullUrl}")
     fun getFilm(@Path(value = "fullUrl", encoded = true ) fullUrl:String):Call<FilmCloud>
+
+
 }

@@ -3,7 +3,12 @@
   <string name="title_search">Search</string>
   <string name="title_favorites">Favorites</string>
   <string name="title_info">Details</string>
-  <string name="hint">Input your character here</string>
+  <string name="hint_search">Input your character here</string>
+  <string name="hint_dark_side">Come To The Dark Side</string>
+
+  <string name="nothing_found">Nothing found</string>
+  <string name="no_connection">No Internet connection</string>
+  <string name="unknown_error">Unknown error. Try again later</string>
 
   <string name="name">Name: </string>
   <string name="gender">Gender: </string>

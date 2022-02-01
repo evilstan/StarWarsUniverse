@@ -1,4 +1,4 @@
-package com.evilstan.starwarsuniverse.ui.search
+package com.evilstan.starwarsuniverse.ui.favorites
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.evilstan.starwarsuniverse.R
 import com.evilstan.starwarsuniverse.domain.cache.PersonCache
 
-class SearchAdapter(
+class FavoritesAdapter(
     private var dataSet: MutableList<PersonCache>,
     private val onPersonClickListener: OnPersonClickListener
-) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<FavoritesAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -32,7 +32,7 @@ class SearchAdapter(
     override fun getItemCount() = dataSet.size
 
 
-    class ViewHolder(
+    inner class ViewHolder(
         view: View
     ) : RecyclerView.ViewHolder(view) {
 
@@ -44,6 +44,8 @@ class SearchAdapter(
 
             favoriteCheckBox.setOnCheckedChangeListener { checkbox, isChecked ->
                 person.favorite = isChecked
+                dataSet.remove(person)
+
                 //TODO remove from database, implementing to DRY
             }
 
