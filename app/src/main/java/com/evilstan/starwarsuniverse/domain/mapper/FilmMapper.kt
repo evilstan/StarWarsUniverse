@@ -1,8 +1,18 @@
 package com.evilstan.starwarsuniverse.domain.mapper
 
 import com.evilstan.starwarsuniverse.data.dictionary.FilmCloud
-import com.evilstan.starwarsuniverse.domain.cache.FilmCache
 
 class FilmMapper {
-    fun map(filmCloud: FilmCloud) = FilmCache(filmCloud.title, filmCloud.episodeId)
+    fun map(filmCloud: FilmCloud) = "Star Wars: Episode ${toRoman(filmCloud.episodeId)}: ${filmCloud.title}"
+
+    private fun toRoman(episode:Int) =
+        when (episode) {
+            1 -> "I"
+            2 -> "II"
+            3 -> "III"
+            4 -> "IV"
+            5 -> "V"
+            6 -> "VI"
+            else -> {""}
+        }
 }

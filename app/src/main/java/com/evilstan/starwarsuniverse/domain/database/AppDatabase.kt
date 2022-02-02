@@ -1,4 +1,4 @@
-package com.evilstan.starwarsuniverse.domain
+package com.evilstan.starwarsuniverse.domain.database
 
 import android.content.Context
 import androidx.room.Database
@@ -7,7 +7,6 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.evilstan.starwarsuniverse.domain.cache.DataConverter
 import com.evilstan.starwarsuniverse.domain.cache.PersonCache
-import com.evilstan.starwarsuniverse.domain.cache.PersonDao
 
 @Database(entities = [PersonCache::class], version = 1, exportSchema = false)
 @TypeConverters(DataConverter::class)

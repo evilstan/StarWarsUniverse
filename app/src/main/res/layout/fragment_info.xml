@@ -7,6 +7,16 @@
   android:layout_height="match_parent"
   tools:context=".ui.info.InfoFragment">
 
+  <CheckBox
+    android:id="@+id/favorite_checkbox"
+    style="?android:attr/starStyle"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="4dp"
+    android:layout_marginStart="4dp"
+    app:layout_constraintStart_toEndOf="@id/name_value"
+    app:layout_constraintTop_toTopOf="parent" />
+
   <TextView
     android:id="@+id/name_value"
     style="@style/header_style"
@@ -159,22 +169,21 @@
 
   <TextView
     android:id="@+id/films"
-    style="@style/body_style"
+    style="@style/header_style"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="@string/films"
-    app:layout_constraintEnd_toStartOf="@id/films_value"
+    app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@id/hair_color_value" />
 
-  <TextView
-    android:id="@+id/films_value"
-    style="@style/body_style"
-    android:layout_width="wrap_content"
+  <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/recycler_films"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toEndOf="@+id/films"
-    app:layout_constraintTop_toBottomOf="@id/hair_color_value" />
+    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/films" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
