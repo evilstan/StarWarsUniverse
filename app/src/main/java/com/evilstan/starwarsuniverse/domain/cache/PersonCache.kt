@@ -1,9 +1,11 @@
 package com.evilstan.starwarsuniverse.domain.cache
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
-
+@Parcelize
 @Entity(tableName = "persons")
 data class PersonCache(
     @PrimaryKey
@@ -17,5 +19,5 @@ data class PersonCache(
     val gender: String,
     var films: ArrayList<String>,
     var favorite: Boolean
-)
+) : Parcelable
 

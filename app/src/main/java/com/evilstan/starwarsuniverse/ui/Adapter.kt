@@ -61,8 +61,6 @@ class Adapter(
     inner class ViewHolder(
         view: View
     ) : RecyclerView.ViewHolder(view) {
-        private val textView: TextView = view.findViewById(R.id.recycler_item_star)
-        private val checkBox: CheckBox = view.findViewById(R.id.favorite_checkbox)
 
         fun setCharacter(person: PersonCache) {
 

@@ -6,14 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.evilstan.starwarsuniverse.databinding.FragmentInfoBinding
+import com.evilstan.starwarsuniverse.domain.cache.PersonCache
 
-class InfoFragment : Fragment() {
+class InfoFragment : Fragment(), View.OnClickListener {
 
     private var _binding: FragmentInfoBinding? = null
-
     private val binding get() = _binding!!
     private var dataSet = arrayListOf<String>()
     private lateinit var adapter: InfoAdapter
@@ -24,15 +22,13 @@ class InfoFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentInfoBinding.inflate(inflater, container, false)
-        val root: View = binding.root
         viewModel = InfoViewModel(requireContext())
-
-        init()
         parseBundle(requireArguments())
-
-        return root
+        adapter = InfoAdapter(dataSet)
+        binding.recyclerFilms.adapter = adapter
+        binding.favoriteCheckbox.setOnClickListener(this)
+        return binding.root
     }
 
     private fun parseBundle(bundle: Bundle) {
@@ -53,8 +49,24 @@ class InfoFragment : Fragment() {
         _binding = null
     }
 
-    private fun init() {
-        adapter = InfoAdapter(dataSet)
-        binding.recyclerFilms.adapter = adapter
+    override fun onClick(view: View) {
+        view as CheckBox
+        viewModel.makeFavorite(getPerson(), view.isChecked)
+    }
+
+    private fun getPerson(): PersonCache {
+        val bundle = requireArguments()
+        return PersonCache(
+            bundle.getString("name")!!,
+            bundle.getString("height")!!,
+            bundle.getString("mass")!!,
+            bundle.getString("hair_color")!!,
+            bundle.getString("skin_color")!!,
+            bundle.getString("eye_color")!!,
+            bundle.getString("birth_year")!!,
+            bundle.getString("gender")!!,
+            bundle.getStringArrayList("films")!!,
+            bundle.getBoolean("favorite")
+        )
     }
 }
