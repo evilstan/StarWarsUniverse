@@ -1,6 +1,8 @@
 package com.evilstan.starwarsuniverse.domain.cache
 
-import androidx.room.*
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
 
 @Entity(tableName = "persons")
 data class PersonCache(
@@ -14,5 +16,6 @@ data class PersonCache(
     val birth_year: String,
     val gender: String,
     var films: ArrayList<String>,
-    var favorite:Boolean
-    )
+    var favorite: Boolean
+)
+

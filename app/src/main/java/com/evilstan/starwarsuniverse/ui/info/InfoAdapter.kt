@@ -3,20 +3,24 @@ package com.evilstan.starwarsuniverse.ui.info
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.evilstan.starwarsuniverse.R
+import com.evilstan.starwarsuniverse.databinding.ListItemSimpleBinding
 
 class InfoAdapter(
     private var dataSet: MutableList<String>
 ) : RecyclerView.Adapter<InfoAdapter.ViewHolder>() {
 
+    private var _binding: ListItemSimpleBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater
-            .from(parent.context)
-            .inflate(R.layout.list_item_simple, parent, false)
-        return ViewHolder(view)
+        _binding = ListItemSimpleBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return ViewHolder(binding.root)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -26,15 +30,12 @@ class InfoAdapter(
 
     override fun getItemCount() = dataSet.size
 
-
     inner class ViewHolder(
         view: View
     ) : RecyclerView.ViewHolder(view) {
 
-        private var filmText: TextView = view.findViewById(R.id.recycler_item)
-
         fun setText(film: String) {
-            filmText.text = film
+            binding.recyclerItemSimple.text = film
         }
     }
 }

@@ -6,5 +6,4 @@ import com.evilstan.starwarsuniverse.domain.cache.PersonCache
 
 class FavoritesViewModel(context: Context) : BaseViewModel(context) {
     val personsFromDb = cachedPersons
-
 }

@@ -64,6 +64,7 @@ class SearchViewModel(context: Context) : BaseViewModel(context) {
                 val response = request.invoke()
                 if (response.title != null) {
                     film = FilmCloud(response.title, response.episode!!)
+                    personsMapped.postValue(Event.success(null))
                 }
             } catch (e: Exception) {
                 e.printStackTrace()

@@ -12,14 +12,13 @@ import com.evilstan.starwarsuniverse.domain.cache.PersonCache
 import com.evilstan.starwarsuniverse.ui.Adapter
 
 class FavoritesFragment : Fragment(),
-    Adapter.OnPersonClickListener, Adapter.OnFavoriteClickListener {
+    Adapter.OnPersonClickListener,
+    Adapter.OnFavoriteClickListener {
 
     private var _binding: FragmentFavoritesBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: Adapter
-    private var dataSet = mutableListOf<PersonCache>()
     private lateinit var viewModel: FavoritesViewModel
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,25 +26,9 @@ class FavoritesFragment : Fragment(),
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
-
         viewModel = FavoritesViewModel(requireContext())
         initComponents()
-
         return binding.root
-    }
-
-    private fun initComponents() {
-        adapter = Adapter(dataSet, this,this)
-        binding.favoritesRecycler.adapter = adapter
-        viewModel.personsFromDb.observe(viewLifecycleOwner) { loadDataSet(it) }
-    }
-
-    private fun loadDataSet(data: List<PersonCache>) {
-        dataSet.clear()
-        for (personCache in data) {
-            dataSet.add(personCache)
-        }
-        adapter.notifyDataSetChanged()
     }
 
     override fun onDestroyView() {
@@ -53,15 +36,18 @@ class FavoritesFragment : Fragment(),
         _binding = null
     }
 
+    private fun initComponents() {
+        adapter = Adapter( this,this)
+        binding.favoritesRecycler.adapter = adapter
+        viewModel.personsFromDb.observe(viewLifecycleOwner) { adapter.submitList(it) }
+    }
 
     override fun onPersonClick(personCache: PersonCache) {
         Navigation.findNavController(binding.favoritesRecycler)
-            .navigate(R.id.navi_info, bundle(personCache))//TODO make through ViewModel
+            .navigate(R.id.navi_info, makeBundle(personCache))//TODO make through ViewModel
     }
 
-
-
-    private fun bundle(personCache: PersonCache): Bundle {
+    private fun makeBundle(personCache: PersonCache): Bundle { //TODO parcelable
         val bundle = Bundle()
         bundle.putString("name", personCache.name)
         bundle.putString("height", personCache.height)
@@ -79,6 +65,4 @@ class FavoritesFragment : Fragment(),
     override fun onFavoriteClick(person: PersonCache, favorite: Boolean) {
         viewModel.makeFavorite(person,favorite)
     }
-
-
 }
