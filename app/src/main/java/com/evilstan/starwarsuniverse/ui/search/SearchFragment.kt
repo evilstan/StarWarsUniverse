@@ -1,6 +1,5 @@
 package com.evilstan.starwarsuniverse.ui.search
 
-import android.app.Application
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,22 +9,21 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.evilstan.starwarsuniverse.R
-import com.evilstan.starwarsuniverse.Status
-import com.evilstan.starwarsuniverse.data.dictionary.PersonCloud
+import com.evilstan.starwarsuniverse.ui.Status
 import com.evilstan.starwarsuniverse.databinding.FragmentSearchBinding
 import com.evilstan.starwarsuniverse.domain.cache.PersonCache
-import com.evilstan.starwarsuniverse.domain.mapper.PersonMapper
+import com.evilstan.starwarsuniverse.ui.Adapter
+import com.evilstan.starwarsuniverse.ui.ErrorMessage
 
 class SearchFragment : Fragment(),
-    SearchAdapter.OnPersonClickListener {
+    Adapter.OnPersonClickListener, Adapter.OnFavoriteClickListener {
 
 
     private var dataSet: MutableList<PersonCache> = mutableListOf()
-    private lateinit var adapter: SearchAdapter
+    private lateinit var adapter: Adapter
     private lateinit var viewModel: SearchViewModel
     private lateinit var textView: TextView
 
@@ -46,18 +44,18 @@ class SearchFragment : Fragment(),
     }
 
     private fun initComponents() {
-        adapter = SearchAdapter(dataSet, this)
+        adapter = Adapter(dataSet, this, this)
         binding.searchRecycler.adapter = adapter
         textView = binding.errorText
         binding.editText.addTextChangedListener(textWatcher)
     }
 
     private fun observeGetPosts() {
-        viewModel.personsFromCloud.observe(viewLifecycleOwner) {
+        viewModel.personsMapped.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.LOADING -> onResponseLoading()
                 Status.SUCCESS -> onResponseSuccess(it.data)
-                Status.ERROR -> onResponseError(it.error)
+                Status.ERROR -> onResponseError()
             }
         }
     }
@@ -74,7 +72,7 @@ class SearchFragment : Fragment(),
         override fun onTextChanged(charSequence: CharSequence, p1: Int, p2: Int, p3: Int) {
 
             if (charSequence.isNotEmpty()) {
-                viewModel.getUsers(charSequence.toString())
+                viewModel.search(charSequence.toString())
             } else {
                 clearRecycler()
             }
@@ -95,22 +93,21 @@ class SearchFragment : Fragment(),
         switchProgressBar(true)
     }
 
-    private fun onResponseSuccess(data: ArrayList<PersonCloud>?) {
-        val mapper = PersonMapper()
-
+    private fun onResponseSuccess(data: ArrayList<PersonCache>?) {
         dataSet.clear()
+
         if (data != null) {
             for (personCache in data) {
-                dataSet.add(mapper.map(personCache))
+                dataSet.add((personCache))
             }
         }
+
         switchText(dataSet.isEmpty())
         switchProgressBar(false)
         adapter.notifyDataSetChanged() //TODO use DiffUtil
 
     }
-
-    private fun onResponseError(error: Error?) {
+    private fun onResponseError() {
         switchProgressBar(false)
         switchText(true, ErrorMessage.ErrorCode.NO_INTERNET)
     }
@@ -133,9 +130,12 @@ class SearchFragment : Fragment(),
     }
 
     override fun onPersonClick(personCache: PersonCache) {
-        Navigation.findNavController(binding.editText)
-            .navigate(R.id.navi_info, bundle(personCache))//TODO make through ViewModel
-        viewModel.insertToDb(personCache)
+        viewModel.addFilm(personCache)
+        viewModel.filmedPerson.observe(viewLifecycleOwner) {
+            Navigation.findNavController(binding.editText)
+                .navigate(R.id.navi_info, bundle(it))//TODO make through ViewModel
+        }
+
     }
 
     private fun bundle(personCache: PersonCache): Bundle {
@@ -149,7 +149,12 @@ class SearchFragment : Fragment(),
         bundle.putString("birth_year", personCache.birth_year)
         bundle.putString("gender", personCache.gender)
         bundle.putStringArrayList("films", personCache.films)
+        bundle.putBoolean("favorite",personCache.favorite)
         return bundle
+    }
+
+    override fun onFavoriteClick(person: PersonCache, favorite: Boolean) {
+        viewModel.makeFavorite(person, favorite)
     }
 }
 

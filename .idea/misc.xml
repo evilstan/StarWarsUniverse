@@ -8,6 +8,8 @@
         <entry key="..\:/Users/alexp/OneDrive/Android/StarWarsUniverse/app/src/main/res/layout/fragment_info.xml" value="0.1" />
         <entry key="..\:/Users/alexp/OneDrive/Android/StarWarsUniverse/app/src/main/res/layout/fragment_search.xml" value="0.1" />
         <entry key="..\:/Users/alexp/OneDrive/Android/StarWarsUniverse/app/src/main/res/layout/list_item.xml" value="0.5" />
+        <entry key="..\:/Users/alexp/OneDrive/Android/StarWarsUniverse/app/src/main/res/layout/list_item_simple.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/alexp/OneDrive/Android/StarWarsUniverse/app/src/main/res/layout/list_item_star.xml" value="0.1" />
         <entry key="..\:/Users/alexp/OneDrive/Android/StarWarsUniverse/app/src/main/res/menu/bottom_nav_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/user/OneDrive/StarWarsUniverse/app/src/main/res/layout/fragment_search.xml" value="0.28940217391304346" />
         <entry key="..\:/Users/user/OneDrive/StarWarsUniverse/app/src/main/res/layout/list_item.xml" value="0.17685185185185184" />
@@ -18,7 +20,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_16_PREVIEW" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_15_PREVIEW" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

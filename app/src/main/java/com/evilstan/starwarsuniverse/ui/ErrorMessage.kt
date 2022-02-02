@@ -1,6 +1,6 @@
-package com.evilstan.starwarsuniverse.ui.search
+package com.evilstan.starwarsuniverse.ui
 
-class ErrorMessage(errorCode: ErrorCode) {
+class ErrorMessage() {
     companion object {
         fun message(errorCode: ErrorCode) =
             when (errorCode) {

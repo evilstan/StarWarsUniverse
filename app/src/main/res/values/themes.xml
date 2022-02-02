@@ -26,9 +26,17 @@
     <item name="android:layout_marginTop">@dimen/card_vert_margin</item>
   </style>
 
-  <style name="recycler_text_style" parent="TextAppearance.AppCompat">
+  <style name="recycler_search_text_style" parent="TextAppearance.AppCompat">
     <item name="android:layout_marginStart">@dimen/search_text_margin</item>
     <item name="android:layout_marginEnd">@dimen/search_text_margin</item>
+    <item name="android:textSize">@dimen/recycler_search_text_size</item>
+  </style>
+
+  <style name="recycler_info_text_style" parent="TextAppearance.AppCompat">
+    <item name="android:layout_marginStart">@dimen/search_text_margin</item>
+    <item name="android:layout_marginEnd">@dimen/search_text_margin</item>
+    <item name="android:textSize">@dimen/recycler_info_text_size</item>
+    <item name="android:padding">@dimen/recycler_info_padding</item>
   </style>
 
   <style name="info_text_style" parent="TextAppearance.AppCompat">
@@ -47,9 +55,10 @@
   </style>
 
   <style name="text_default_style" parent="TextAppearance.AppCompat">
-    <item name="android:textSize">@dimen/default_text_style</item>
+    <item name="android:textSize">@dimen/default_text_size</item>
     <item name="android:layout_marginTop">@dimen/default_margin_vert</item>
   </style>
+
 
 
 </resources>

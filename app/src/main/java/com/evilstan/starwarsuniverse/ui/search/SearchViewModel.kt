@@ -2,38 +2,90 @@ package com.evilstan.starwarsuniverse.ui.search
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.evilstan.starwarsuniverse.BaseViewModel
-import com.evilstan.starwarsuniverse.Event
+import com.evilstan.starwarsuniverse.data.core.NetModule
+import com.evilstan.starwarsuniverse.data.core.StarWarsApi
+import com.evilstan.starwarsuniverse.data.dictionary.FilmCloud
 import com.evilstan.starwarsuniverse.data.dictionary.PersonCloud
-import com.evilstan.starwarsuniverse.domain.AppDatabase
-import com.evilstan.starwarsuniverse.domain.Repository
+import com.evilstan.starwarsuniverse.data.dictionary.ResponseWrapper
 import com.evilstan.starwarsuniverse.domain.cache.PersonCache
+import com.evilstan.starwarsuniverse.domain.mapper.FilmMapper
+import com.evilstan.starwarsuniverse.domain.mapper.PersonMapper
+import com.evilstan.starwarsuniverse.ui.Event
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class SearchViewModel(context: Context) : BaseViewModel() {
+class SearchViewModel(context: Context) : BaseViewModel(context) {
 
     val personsFromCloud = MutableLiveData<Event<ArrayList<PersonCloud>>>()
-    private val personsFromDb = MutableLiveData<List<PersonCache>>()
+    val personsMapped = MutableLiveData<Event<ArrayList<PersonCache>>>()
 
-    val allPersons = MutableLiveData<Event<ArrayList<PersonCloud>>>()
-    private val movieDao = AppDatabase.getInstance(context).personDao()
-    private val repository = Repository(movieDao)
+    private var starWarsApi: StarWarsApi = NetModule().service(StarWarsApi::class.java)
 
 
-    fun getUsers(name: String) {
-        requestWithLiveData(personsFromCloud) {
-            api.search(name)
+    fun search(name: String) {
+        personsMapped.postValue(Event.loading())
+        val mapper = PersonMapper()
+
+        this.viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val request: suspend () -> ResponseWrapper<ArrayList<PersonCloud>> =
+                    { starWarsApi.search(name) }
+
+                val response = request.invoke()
+                if (response.data != null) {
+                    val personCacheList = arrayListOf<PersonCache>()
+
+                    for (personCloud in response.data) {
+                        val personCache = mapper.map(personCloud)
+                        personCache.favorite = dbContains(personCache.name)
+                        personCacheList.add(personCache)
+                    }
+
+                    personsMapped.postValue(Event.success(personCacheList))
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                personsMapped.postValue(Event.error())
+            }
         }
     }
 
-    fun getPersonsFromDb() {
-        getPersons(repository, personsFromDb)
+    var film = FilmCloud("", 0)
+
+    private suspend fun getFilms(ulr: String): FilmCloud {
+        personsMapped.postValue(Event.loading())
+
+        this.viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val request: suspend () -> ResponseWrapper<FilmCloud> =
+                    { starWarsApi.getFilm(ulr) }
+                val response = request.invoke()
+                if (response.title != null) {
+                    film = FilmCloud(response.title, response.episode!!)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                personsMapped.postValue(Event.error())
+            }
+        }.join()
+        return film
     }
 
-    fun insertToDb(personCache: PersonCache) {
-        insert(personCache, repository)
-    }
+    val filmedPerson = MutableLiveData<PersonCache>()
 
-    fun deleteFromDb(personCache: PersonCache) {
-        delete(personCache, repository)
+    fun addFilm(personCache: PersonCache) {
+
+        val films = arrayListOf<String>()
+        val filmMapper = FilmMapper()
+
+        viewModelScope.launch {
+            for (episode in personCache.films) {
+                films.add(filmMapper.map(getFilms(episode)))
+            }
+            personCache.films = films
+            filmedPerson.postValue(personCache)
+        }
     }
 }

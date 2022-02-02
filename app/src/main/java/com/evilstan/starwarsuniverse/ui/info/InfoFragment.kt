@@ -4,16 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.evilstan.starwarsuniverse.databinding.FragmentInfoBinding
-import java.util.*
-import kotlin.collections.ArrayList
 
-class InfoFragment() : Fragment() {
+class InfoFragment : Fragment() {
 
     private var _binding: FragmentInfoBinding? = null
 
     private val binding get() = _binding!!
+    private var dataSet = arrayListOf<String>()
+    private lateinit var adapter: InfoAdapter
+    private lateinit var viewModel: InfoViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -23,8 +27,11 @@ class InfoFragment() : Fragment() {
 
         _binding = FragmentInfoBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        viewModel = InfoViewModel(requireContext())
+
         init()
-            parseBundle(requireArguments())
+        parseBundle(requireArguments())
+
         return root
     }
 
@@ -37,11 +44,8 @@ class InfoFragment() : Fragment() {
         binding.eyeColorValue.text = bundle.getString("eye_color")
         binding.birtYearValue.text = bundle.getString("birth_year")
         binding.genderValue.text = bundle.getString("gender")
-        filmsToString(bundle.getStringArrayList("films")!!)
-    }
-
-    private fun filmsToString(films: ArrayList<String>) {
-        binding.filmsValue.text = films.joinToString(", ")
+        dataSet.addAll(bundle.getStringArrayList("films")!!)
+        binding.favoriteCheckbox.isChecked = bundle.getBoolean("favorite")
     }
 
     override fun onDestroyView() {
@@ -50,6 +54,7 @@ class InfoFragment() : Fragment() {
     }
 
     private fun init() {
-
+        adapter = InfoAdapter(dataSet)
+        binding.recyclerFilms.adapter = adapter
     }
 }

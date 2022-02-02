@@ -6,11 +6,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 
 class NetModule {
 
-    private val retrofit = ProvideRetrofit(
-        BASE_URL,
-        ProvideGson().factory()
-    )
-        .retrofit()
+    private val retrofit = ProvideRetrofit(BASE_URL).retrofit()
 
     fun <T> service(clazz: Class<T>): T = retrofit.create(clazz)
 

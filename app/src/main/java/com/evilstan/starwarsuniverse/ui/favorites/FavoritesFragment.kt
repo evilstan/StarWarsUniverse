@@ -9,12 +9,14 @@ import androidx.navigation.Navigation
 import com.evilstan.starwarsuniverse.R
 import com.evilstan.starwarsuniverse.databinding.FragmentFavoritesBinding
 import com.evilstan.starwarsuniverse.domain.cache.PersonCache
+import com.evilstan.starwarsuniverse.ui.Adapter
 
-class FavoritesFragment : Fragment(), FavoritesAdapter.OnPersonClickListener {
+class FavoritesFragment : Fragment(),
+    Adapter.OnPersonClickListener, Adapter.OnFavoriteClickListener {
 
     private var _binding: FragmentFavoritesBinding? = null
     private val binding get() = _binding!!
-    private lateinit var adapter: FavoritesAdapter
+    private lateinit var adapter: Adapter
     private var dataSet = mutableListOf<PersonCache>()
     private lateinit var viewModel: FavoritesViewModel
 
@@ -33,13 +35,13 @@ class FavoritesFragment : Fragment(), FavoritesAdapter.OnPersonClickListener {
     }
 
     private fun initComponents() {
-        adapter = FavoritesAdapter(dataSet, this)
+        adapter = Adapter(dataSet, this,this)
         binding.favoritesRecycler.adapter = adapter
-        viewModel.allPersons.observe(viewLifecycleOwner) { loadDataSet(it) }
-
+        viewModel.personsFromDb.observe(viewLifecycleOwner) { loadDataSet(it) }
     }
 
     private fun loadDataSet(data: List<PersonCache>) {
+        dataSet.clear()
         for (personCache in data) {
             dataSet.add(personCache)
         }
@@ -57,6 +59,8 @@ class FavoritesFragment : Fragment(), FavoritesAdapter.OnPersonClickListener {
             .navigate(R.id.navi_info, bundle(personCache))//TODO make through ViewModel
     }
 
+
+
     private fun bundle(personCache: PersonCache): Bundle {
         val bundle = Bundle()
         bundle.putString("name", personCache.name)
@@ -68,7 +72,12 @@ class FavoritesFragment : Fragment(), FavoritesAdapter.OnPersonClickListener {
         bundle.putString("birth_year", personCache.birth_year)
         bundle.putString("gender", personCache.gender)
         bundle.putStringArrayList("films", personCache.films)
+        bundle.putBoolean("favorite",personCache.favorite)
         return bundle
+    }
+
+    override fun onFavoriteClick(person: PersonCache, favorite: Boolean) {
+        viewModel.makeFavorite(person,favorite)
     }
 
 

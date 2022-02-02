@@ -1,12 +1,14 @@
-package com.evilstan.starwarsuniverse.domain
+package com.evilstan.starwarsuniverse.domain.database
 
-import androidx.lifecycle.LiveData
 import com.evilstan.starwarsuniverse.domain.cache.PersonCache
-import com.evilstan.starwarsuniverse.domain.cache.PersonDao
 
 class Repository(private val personDao: PersonDao) {
 
-    val allPersons: LiveData<List<PersonCache>> = personDao.getPersons()
+    suspend fun contains(name:String) = personDao.contains(name)
+
+    fun getAllByLiveData() = personDao.getPersons()
+
+    suspend fun getAll() = personDao.getAll()
 
     suspend fun insert(person: PersonCache) {
         personDao.insert(person)
@@ -15,6 +17,4 @@ class Repository(private val personDao: PersonDao) {
     suspend fun delete(person: PersonCache) {
         personDao.delete(person)
     }
-
-    suspend fun getCount() = personDao.getCount()
 }
