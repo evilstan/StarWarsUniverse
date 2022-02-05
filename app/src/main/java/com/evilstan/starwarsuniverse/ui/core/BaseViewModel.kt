@@ -1,4 +1,4 @@
-package com.evilstan.starwarsuniverse
+package com.evilstan.starwarsuniverse.ui.core
 
 import android.content.Context
 import androidx.lifecycle.LiveData
@@ -11,8 +11,8 @@ import kotlinx.coroutines.launch
 
 abstract class BaseViewModel(context: Context) : ViewModel() {
     private val movieDao = AppDatabase.getInstance(context).personDao()
-    private val repository = Repository(movieDao)
-    val cachedPersons: LiveData<List<PersonCache>> = repository.getAllByLiveData()
+    private val repository = Repository.Base(movieDao)
+    val cachedPersons: LiveData<List<PersonCache>> = repository.getPersons()
 
     private var contains = false
 

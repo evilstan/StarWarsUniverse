@@ -6,7 +6,7 @@
   <string name="hint_search">Input your character here</string>
   <string name="hint_dark_side">Come To The Dark Side</string>
 
-  <string name="nothing_found">Nothing found</string>
+  <string name="nothing_found">No such character found</string>
   <string name="no_connection">No Internet connection</string>
   <string name="unknown_error">Unknown error. Try again later</string>
 

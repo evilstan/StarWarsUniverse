@@ -10,9 +10,6 @@ interface PersonDao {
     suspend fun contains(name: String): Boolean
 
     @Query("SELECT * FROM persons")
-    suspend fun getAll(): List<PersonCache>
-
-    @Query("SELECT * FROM persons")
     fun getPersons(): LiveData<List<PersonCache>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import androidx.fragment.app.Fragment
 import com.evilstan.starwarsuniverse.databinding.FragmentInfoBinding
+import com.evilstan.starwarsuniverse.domain.PersonBundle
 import com.evilstan.starwarsuniverse.domain.cache.PersonCache
 
 class InfoFragment : Fragment(), View.OnClickListener {
@@ -16,6 +17,7 @@ class InfoFragment : Fragment(), View.OnClickListener {
     private var dataSet = arrayListOf<String>()
     private lateinit var adapter: InfoAdapter
     private lateinit var viewModel: InfoViewModel
+    private val personBundle = PersonBundle()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,49 +26,33 @@ class InfoFragment : Fragment(), View.OnClickListener {
     ): View {
         _binding = FragmentInfoBinding.inflate(inflater, container, false)
         viewModel = InfoViewModel(requireContext())
-        parseBundle(requireArguments())
+        setInfo(personBundle.makePerson(requireArguments()))
         adapter = InfoAdapter(dataSet)
         binding.recyclerFilms.adapter = adapter
         binding.favoriteCheckbox.setOnClickListener(this)
         return binding.root
     }
 
-    private fun parseBundle(bundle: Bundle) {
-        binding.nameValue.text = bundle.getString("name")
-        binding.heightValue.text = bundle.getString("height")
-        binding.weightValue.text = bundle.getString("mass")
-        binding.hairColorValue.text = bundle.getString("hair_color")
-        binding.skinColorValue.text = bundle.getString("skin_color")
-        binding.eyeColorValue.text = bundle.getString("eye_color")
-        binding.birtYearValue.text = bundle.getString("birth_year")
-        binding.genderValue.text = bundle.getString("gender")
-        dataSet.addAll(bundle.getStringArrayList("films")!!)
-        binding.favoriteCheckbox.isChecked = bundle.getBoolean("favorite")
+    private fun setInfo(person: PersonCache) {
+        binding.nameValue.text = person.name
+        binding.heightValue.text = person.height
+        binding.weightValue.text = person.mass
+        binding.hairColorValue.text = person.hair_color
+        binding.skinColorValue.text = person.skin_color
+        binding.eyeColorValue.text = person.eye_color
+        binding.birtYearValue.text = person.birth_year
+        binding.genderValue.text = person.gender
+        dataSet.addAll(person.films)
+        binding.favoriteCheckbox.isChecked = person.favorite
+    }
+
+    override fun onClick(view: View) {
+        view as CheckBox
+        viewModel.makeFavorite(personBundle.makePerson(requireArguments()), view.isChecked)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun onClick(view: View) {
-        view as CheckBox
-        viewModel.makeFavorite(getPerson(), view.isChecked)
-    }
-
-    private fun getPerson(): PersonCache {
-        val bundle = requireArguments()
-        return PersonCache(
-            bundle.getString("name")!!,
-            bundle.getString("height")!!,
-            bundle.getString("mass")!!,
-            bundle.getString("hair_color")!!,
-            bundle.getString("skin_color")!!,
-            bundle.getString("eye_color")!!,
-            bundle.getString("birth_year")!!,
-            bundle.getString("gender")!!,
-            bundle.getStringArrayList("films")!!,
-            bundle.getBoolean("favorite")
-        )
     }
 }

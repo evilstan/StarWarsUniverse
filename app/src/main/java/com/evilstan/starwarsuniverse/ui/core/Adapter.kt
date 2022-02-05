@@ -1,17 +1,13 @@
-package com.evilstan.starwarsuniverse.ui
+package com.evilstan.starwarsuniverse.ui.core
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.TextView
-import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.evilstan.starwarsuniverse.R
 import com.evilstan.starwarsuniverse.databinding.ListItemStarBinding
 import com.evilstan.starwarsuniverse.domain.cache.PersonCache
-
 
 class Adapter(
     private val onPersonClickListener: OnPersonClickListener,
@@ -20,28 +16,14 @@ class Adapter(
 
     private var _binding: ListItemStarBinding? = null
     private val binding get() = _binding!!
+    private var dataSet = listOf<PersonCache>()
 
-    private val differ: AsyncListDiffer<PersonCache> = AsyncListDiffer(this, DIFF_CALLBACK)
-
-    fun submitList(list: List<PersonCache>) {
-        differ.submitList(list)
+    fun update(data: List<PersonCache>) {
+        val diffUtilsCallback = DiffUtilsCallback(dataSet, data)
+        val diffResult = DiffUtil.calculateDiff(diffUtilsCallback)
+        dataSet = data
+        diffResult.dispatchUpdatesTo(this)
     }
-
-    companion object {
-        val DIFF_CALLBACK: DiffUtil.ItemCallback<PersonCache> =
-            object : DiffUtil.ItemCallback<PersonCache>() {
-                override fun areItemsTheSame(
-                    oldItem: PersonCache,
-                    newItem: PersonCache
-                ) = oldItem.name == newItem.name
-
-                override fun areContentsTheSame(
-                    oldItem: PersonCache,
-                    newItem: PersonCache
-                ) = oldItem == newItem
-            }
-    }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         _binding = ListItemStarBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -49,14 +31,14 @@ class Adapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val person = differ.currentList[position]
+        holder.setIsRecyclable(false)
+        val person = dataSet[position]
 
         holder.setCharacter(person)
         holder.itemView.setOnClickListener { onPersonClickListener.onPersonClick(person) }
-
     }
 
-    override fun getItemCount() = differ.currentList.size
+    override fun getItemCount() = dataSet.size
 
     inner class ViewHolder(
         view: View
@@ -75,7 +57,7 @@ class Adapter(
     }
 
     interface OnPersonClickListener {
-        fun onPersonClick(personCache: PersonCache)
+        fun onPersonClick(person: PersonCache)
     }
 
     interface OnFavoriteClickListener {

@@ -1,5 +1,6 @@
 package com.evilstan.starwarsuniverse.data.dictionary
 
+import com.evilstan.starwarsuniverse.domain.cache.PersonCache
 import com.google.gson.annotations.SerializedName
 
 data class PersonCloud(
@@ -29,5 +30,17 @@ data class PersonCloud(
 
     @SerializedName("films")
     val films: ArrayList<String>
-)
-
+) {
+    fun map() = PersonCache(
+        name,
+        height,
+        mass,
+        hairColor,
+        skinColor,
+        eyeColor,
+        birthYear,
+        gender,
+        films,
+        false
+    )
+}
