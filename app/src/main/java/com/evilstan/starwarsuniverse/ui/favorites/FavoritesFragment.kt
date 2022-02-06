@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import com.evilstan.starwarsuniverse.cloud.core.App
 import com.evilstan.starwarsuniverse.R
 import com.evilstan.starwarsuniverse.databinding.FragmentFavoritesBinding
 import com.evilstan.starwarsuniverse.domain.PersonBundle
@@ -27,7 +28,7 @@ class FavoritesFragment : Fragment(),
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
-        viewModel = FavoritesViewModel(requireContext())
+        viewModel = FavoritesViewModel(App.instance)
         initComponents()
         return binding.root
     }
@@ -47,7 +48,7 @@ class FavoritesFragment : Fragment(),
     override fun onPersonClick(person: PersonCache) {
         val personBundle = PersonBundle()
         Navigation.findNavController(binding.favoritesRecycler)
-            .navigate(R.id.navi_info, personBundle.makeBundle(person))//TODO make through ViewModel
+            .navigate(R.id.navi_info, personBundle.makeBundle(person))
     }
 
     override fun onFavoriteClick(person: PersonCache, favorite: Boolean) {

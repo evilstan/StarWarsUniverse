@@ -1,8 +1,4 @@
-package com.evilstan.starwarsuniverse.data.core
-
-import okhttp3.Interceptor
-import okhttp3.Interceptor.Companion.invoke
-import okhttp3.logging.HttpLoggingInterceptor
+package com.evilstan.starwarsuniverse.cloud.core
 
 class NetModule {
 

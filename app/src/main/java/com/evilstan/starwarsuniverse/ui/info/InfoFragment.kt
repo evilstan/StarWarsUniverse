@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import androidx.fragment.app.Fragment
+import com.evilstan.starwarsuniverse.cloud.core.App
 import com.evilstan.starwarsuniverse.databinding.FragmentInfoBinding
 import com.evilstan.starwarsuniverse.domain.PersonBundle
 import com.evilstan.starwarsuniverse.domain.cache.PersonCache
@@ -25,7 +26,7 @@ class InfoFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentInfoBinding.inflate(inflater, container, false)
-        viewModel = InfoViewModel(requireContext())
+        viewModel = InfoViewModel(App.instance)
         setInfo(personBundle.makePerson(requireArguments()))
         adapter = InfoAdapter(dataSet)
         binding.recyclerFilms.adapter = adapter

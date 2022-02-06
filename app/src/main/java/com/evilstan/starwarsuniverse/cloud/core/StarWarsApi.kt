@@ -1,10 +1,10 @@
-package com.evilstan.starwarsuniverse.data.core
+package com.evilstan.starwarsuniverse.cloud.core
 
-import com.evilstan.starwarsuniverse.data.dictionary.FilmCloud
-import com.evilstan.starwarsuniverse.data.dictionary.PersonCloud
-import com.evilstan.starwarsuniverse.data.dictionary.ResponseWrapper
-import retrofit2.Call
+import com.evilstan.starwarsuniverse.cloud.dictionary.FilmCloud
+import com.evilstan.starwarsuniverse.cloud.dictionary.PersonCloud
+import com.evilstan.starwarsuniverse.cloud.dictionary.ResponseWrapper
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -15,6 +15,4 @@ interface StarWarsApi {
 
     @GET("{fullUrl}")
     suspend fun getFilm(@Path(value = "fullUrl", encoded = true ) fullUrl:String):ResponseWrapper<FilmCloud>
-
-
 }

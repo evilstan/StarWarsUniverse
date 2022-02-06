@@ -1,13 +1,14 @@
 package com.evilstan.starwarsuniverse.ui.search
 
+import android.app.Application
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.evilstan.starwarsuniverse.data.core.NetModule
-import com.evilstan.starwarsuniverse.data.core.StarWarsApi
-import com.evilstan.starwarsuniverse.data.dictionary.FilmCloud
-import com.evilstan.starwarsuniverse.data.dictionary.PersonCloud
-import com.evilstan.starwarsuniverse.data.dictionary.ResponseWrapper
+import com.evilstan.starwarsuniverse.cloud.core.NetModule
+import com.evilstan.starwarsuniverse.cloud.core.StarWarsApi
+import com.evilstan.starwarsuniverse.cloud.dictionary.FilmCloud
+import com.evilstan.starwarsuniverse.cloud.dictionary.PersonCloud
+import com.evilstan.starwarsuniverse.cloud.dictionary.ResponseWrapper
 import com.evilstan.starwarsuniverse.domain.cache.PersonCache
 import com.evilstan.starwarsuniverse.ui.core.BaseViewModel
 import com.evilstan.starwarsuniverse.ui.core.ErrorMessage
@@ -18,7 +19,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.net.UnknownHostException
 
-class SearchViewModel(context: Context) : BaseViewModel(context) {
+class SearchViewModel(application: Application) : BaseViewModel(application) {
 
     private val debounce = 500L
     val mappedPersons = MutableLiveData<Event<List<PersonCache>>>()

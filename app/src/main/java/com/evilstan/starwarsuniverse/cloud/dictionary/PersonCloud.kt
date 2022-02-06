@@ -1,4 +1,4 @@
-package com.evilstan.starwarsuniverse.data.dictionary
+package com.evilstan.starwarsuniverse.cloud.dictionary
 
 import com.evilstan.starwarsuniverse.domain.cache.PersonCache
 import com.google.gson.annotations.SerializedName

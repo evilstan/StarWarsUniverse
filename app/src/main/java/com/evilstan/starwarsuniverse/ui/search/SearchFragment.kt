@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.evilstan.starwarsuniverse.R
+import com.evilstan.starwarsuniverse.cloud.core.App
 import com.evilstan.starwarsuniverse.databinding.FragmentSearchBinding
 import com.evilstan.starwarsuniverse.domain.PersonBundle
 import com.evilstan.starwarsuniverse.domain.cache.PersonCache
@@ -36,7 +37,7 @@ class SearchFragment : Fragment(),
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
-        viewModel = SearchViewModel(requireContext())
+        viewModel = SearchViewModel(App.instance)
         initComponents()
         observe()
         return binding.root

@@ -1,4 +1,4 @@
-package com.evilstan.starwarsuniverse.data.core
+package com.evilstan.starwarsuniverse.cloud.core
 
 import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
