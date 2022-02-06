@@ -3,44 +3,48 @@ package com.evilstan.starwarsuniverse.cloud.dictionary
 import com.evilstan.starwarsuniverse.domain.cache.PersonCache
 import com.google.gson.annotations.SerializedName
 
-data class PersonCloud(
-    @SerializedName("name")
-    val name: String,
+interface PersonCloud {
+    fun map(): PersonCache
 
-    @SerializedName("height")
-    val height: String,
+    class Base(
+        @SerializedName("name")
+        val name: String,
 
-    @SerializedName("mass")
-    val mass: String,
+        @SerializedName("height")
+        val height: String,
 
-    @SerializedName("hair_color")
-    val hairColor: String,
+        @SerializedName("mass")
+        val mass: String,
 
-    @SerializedName("skin_color")
-    val skinColor: String,
+        @SerializedName("hair_color")
+        val hairColor: String,
 
-    @SerializedName("eye_color")
-    val eyeColor: String,
+        @SerializedName("skin_color")
+        val skinColor: String,
 
-    @SerializedName("birth_year")
-    val birthYear: String,
+        @SerializedName("eye_color")
+        val eyeColor: String,
 
-    @SerializedName("gender")
-    val gender: String,
+        @SerializedName("birth_year")
+        val birthYear: String,
 
-    @SerializedName("films")
-    val films: ArrayList<String>
-) {
-    fun map() = PersonCache(
-        name,
-        height,
-        mass,
-        hairColor,
-        skinColor,
-        eyeColor,
-        birthYear,
-        gender,
-        films,
-        false
-    )
+        @SerializedName("gender")
+        val gender: String,
+
+        @SerializedName("films")
+        val films: ArrayList<String>
+    ) : PersonCloud {
+        override fun map() = PersonCache(
+            name,
+            height,
+            mass,
+            hairColor,
+            skinColor,
+            eyeColor,
+            birthYear,
+            gender,
+            films,
+            false
+        )
+    }
 }

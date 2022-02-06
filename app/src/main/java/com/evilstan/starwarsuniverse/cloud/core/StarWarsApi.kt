@@ -11,7 +11,7 @@ import retrofit2.http.Query
 interface StarWarsApi {
 
     @GET("people/")
-    suspend fun search(@Query("search") search:String): ResponseWrapper<ArrayList<PersonCloud>>
+    suspend fun search(@Query("search") search:String): ResponseWrapper<ArrayList<PersonCloud.Base>>
 
     @GET("{fullUrl}")
     suspend fun getFilm(@Path(value = "fullUrl", encoded = true ) fullUrl:String):ResponseWrapper<FilmCloud>

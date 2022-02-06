@@ -44,7 +44,7 @@ class SearchViewModel(application: Application) : BaseViewModel(application) {
             mappedPersons.postValue(Event.loading())
 
             try {
-                val request: suspend () -> ResponseWrapper<ArrayList<PersonCloud>> =
+                val request: suspend () -> ResponseWrapper<ArrayList<PersonCloud.Base>> =
                     { starWarsApi.search(name) }
 
                 val response = request.invoke()
@@ -75,14 +75,14 @@ class SearchViewModel(application: Application) : BaseViewModel(application) {
         mappedPersons.postValue(Event.loading())
 
         this.viewModelScope.launch(Dispatchers.IO) {
-            personCache.films = personCache.films.map { (requestFilms(it).map()) }
+            personCache.films = personCache.films.map { (requestFilms(it).toString()) }
             filmedPerson.postValue(personCache)
         }
     }
 
 
     private suspend fun requestFilms(ulr: String): FilmCloud {
-        var film = FilmCloud()
+        var film = FilmCloud.Base()
 
             try {
                 val request: suspend () -> ResponseWrapper<FilmCloud> =
@@ -90,7 +90,7 @@ class SearchViewModel(application: Application) : BaseViewModel(application) {
                 val response = request.invoke()
                 if (response.title != null) {
                     println(response)
-                    film = FilmCloud(response.title, response.episode!!)
+                    film = FilmCloud.Base(response.title, response.episode!!)
                     mappedPersons.postValue(Event.success(null))
                 }
             } catch (e: UnknownHostException) {

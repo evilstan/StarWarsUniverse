@@ -7,7 +7,7 @@ interface Repository {
 
     suspend fun contains(name: String): Boolean
 
-    fun getPersons(): LiveData<List<PersonCache>>
+    fun persons(): LiveData<List<PersonCache>>
 
     suspend fun insert(person: PersonCache)
 
@@ -18,14 +18,12 @@ interface Repository {
 
         override suspend fun contains(name: String) = personDao.contains(name)
 
-        override fun getPersons() = personDao.getPersons()
+        override fun persons() = personDao.persons()
 
-        override suspend fun insert(person: PersonCache) {
-            personDao.insert(person)
-        }
+        override suspend fun insert(person: PersonCache) = personDao.insert(person)
 
-        override suspend fun delete(person: PersonCache) {
-            personDao.delete(person)
-        }
+
+        override suspend fun delete(person: PersonCache) = personDao.delete(person)
+
     }
 }

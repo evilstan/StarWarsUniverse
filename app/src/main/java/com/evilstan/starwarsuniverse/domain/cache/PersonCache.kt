@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "persons")
+
 data class PersonCache(
     @PrimaryKey
     var name: String,
