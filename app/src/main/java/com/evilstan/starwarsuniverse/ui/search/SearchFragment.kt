@@ -22,6 +22,7 @@ import com.evilstan.starwarsuniverse.ui.core.Adapter
 import com.evilstan.starwarsuniverse.ui.core.ErrorMessage
 import com.evilstan.starwarsuniverse.ui.core.Status
 import com.evilstan.starwarsuniverse.domain.models.Character
+import com.evilstan.starwarsuniverse.domain.models.CharacterUi
 
 
 class SearchFragment : Fragment(),
@@ -31,10 +32,6 @@ class SearchFragment : Fragment(),
     private lateinit var adapter: Adapter
     private lateinit var viewModel: SearchViewModel
     private var dataset = mutableListOf<CharacterCache>()
-
-    private val searchUseCase = SearchCharacterByIdUseCase()
-    private var saveTiFavoritesUseCase = SaveToFavoritesUseCase()
-    private val showCharacterDetailsUseCase = ShowCharacterDetailsUseCase()
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
@@ -87,7 +84,7 @@ class SearchFragment : Fragment(),
         showProgressBar(true)
     }
 
-    private fun onResponseSuccess(data: List<CharacterCache>?) {
+    private fun onResponseSuccess(data: List<CharacterUi>?) {
         if (data != null) {
             adapter.update(data)
         }
@@ -118,7 +115,7 @@ class SearchFragment : Fragment(),
         }
     }
 
-    override fun onFavoriteClick(character: Character, favorite: Boolean) {
+    override fun onFavoriteClick(character: CharacterUi, favorite: Boolean) {
         viewModel.addFilms(character)
         viewModel.filmedPerson.observe(viewLifecycleOwner) {
             viewModel.makeFavorite(character, favorite)

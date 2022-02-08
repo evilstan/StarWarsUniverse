@@ -6,12 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
-import com.evilstan.starwarsuniverse.cloud.core.App
 import com.evilstan.starwarsuniverse.R
 import com.evilstan.starwarsuniverse.databinding.FragmentFavoritesBinding
 import com.evilstan.starwarsuniverse.domain.PersonBundle
 import com.evilstan.starwarsuniverse.domain.models.Character
-import com.evilstan.starwarsuniverse.domain.models.CharacterCache
 import com.evilstan.starwarsuniverse.ui.core.Adapter
 
 class FavoritesFragment : Fragment(),
@@ -52,7 +50,7 @@ class FavoritesFragment : Fragment(),
             .navigate(R.id.navi_info, personBundle.makeBundle(character))
     }
 
-    override fun onFavoriteClick(character: Character, favorite: Boolean) {
+    override fun onFavoriteClick(character: CharacterUi, favorite: Boolean) {
         viewModel.makeFavorite(character,favorite)
     }
 }

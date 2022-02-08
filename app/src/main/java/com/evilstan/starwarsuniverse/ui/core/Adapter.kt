@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.evilstan.starwarsuniverse.databinding.ListItemStarBinding
 import com.evilstan.starwarsuniverse.domain.models.Character
+import com.evilstan.starwarsuniverse.domain.models.CharacterUi
 
 class Adapter(
     private val onPersonClickListener: OnPersonClickListener,
@@ -16,9 +17,9 @@ class Adapter(
 
     private var _binding: ListItemStarBinding? = null
     private val binding get() = _binding!!
-    private var dataSet = listOf<Character>()
+    private var dataSet = listOf<CharacterUi>()
 
-    fun update(data: List<Character>) {
+    fun update(data: List<CharacterUi>) {
         val diffUtilsCallback = DiffUtilsCallback(dataSet, data)
         val diffResult = DiffUtil.calculateDiff(diffUtilsCallback)
         dataSet = data
@@ -32,10 +33,10 @@ class Adapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.setIsRecyclable(false)
-        val person = dataSet[position]
+        val character = dataSet[position]
 
-        holder.setCharacter(person)
-        holder.itemView.setOnClickListener { onPersonClickListener.onPersonClick(person) }
+        holder.setCharacter(character)
+        holder.itemView.setOnClickListener { onPersonClickListener.onPersonClick(character) }
     }
 
     override fun getItemCount() = dataSet.size
@@ -44,7 +45,7 @@ class Adapter(
         view: View
     ) : RecyclerView.ViewHolder(view) {
 
-        fun setCharacter(character: Character) {
+        fun setCharacter(character: CharacterUi) {
 
             binding.recyclerItemStar.text = character.name
             binding.favoriteCheckbox.isChecked = character.favorite
@@ -61,7 +62,7 @@ class Adapter(
     }
 
     interface OnFavoriteClickListener {
-        fun onFavoriteClick(character: Character, favorite: Boolean)
+        fun onFavoriteClick(character: CharacterUi, favorite: Boolean)
     }
 
 }

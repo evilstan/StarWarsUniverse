@@ -11,6 +11,7 @@ import com.evilstan.starwarsuniverse.cloud.dictionary.ResponseWrapper
 import com.evilstan.starwarsuniverse.domain.models.CharacterCache
 import com.evilstan.starwarsuniverse.domain.models.Character
 import com.evilstan.starwarsuniverse.domain.models.CharacterUi
+import com.evilstan.starwarsuniverse.domain.usecase.SaveToFavoritesUseCase
 import com.evilstan.starwarsuniverse.ui.core.BaseViewModel
 import com.evilstan.starwarsuniverse.ui.core.ErrorMessage
 import com.evilstan.starwarsuniverse.ui.core.Event
@@ -23,8 +24,9 @@ import java.net.UnknownHostException
 class SearchViewModel: BaseViewModel() {
 
     private val debounce = 500L
-    val mappedPersons = MutableLiveData<Event<List<CharacterCache>>>()
+    val mappedPersons = MutableLiveData<Event<List<CharacterUi>>>()
     val filmedPerson = MutableLiveData<Character>()
+
 
     private var starWarsApi: StarWarsApi = NetModule().service(StarWarsApi::class.java)
     private var searchJob: Job? = null
@@ -65,7 +67,7 @@ class SearchViewModel: BaseViewModel() {
         }
     }
 
-    private suspend fun map(response: List<PersonCloud>): List<CharacterCache> {
+    private suspend fun map(response: List<PersonCloud>): List<CharacterUi> {
         val result = response.map { it.map() }
         result.forEach { it.favorite = dbContains(it.name) }
         return result

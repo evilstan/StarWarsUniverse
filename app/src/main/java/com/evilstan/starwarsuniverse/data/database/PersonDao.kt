@@ -14,11 +14,11 @@ interface PersonDao {
     fun persons(): LiveData<List<CharacterUi>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(characterCache: CharacterCache)
+    suspend fun insert(characterCache: CharacterUi)
 
     @Update
-    fun update(characterCache: CharacterCache)
+    fun update(characterCache: CharacterUi)
 
     @Delete
-    suspend fun delete(characterCache: CharacterCache)
+    suspend fun delete(characterCache: CharacterUi)
 }
