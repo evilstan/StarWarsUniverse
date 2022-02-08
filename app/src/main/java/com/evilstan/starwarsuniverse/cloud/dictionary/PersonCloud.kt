@@ -1,10 +1,10 @@
 package com.evilstan.starwarsuniverse.cloud.dictionary
 
-import com.evilstan.starwarsuniverse.domain.cache.PersonCache
+import com.evilstan.starwarsuniverse.domain.models.CharacterCache
 import com.google.gson.annotations.SerializedName
 
 interface PersonCloud {
-    fun map(): PersonCache
+    fun map(): CharacterCache
 
     class Base(
         @SerializedName("name")
@@ -34,7 +34,7 @@ interface PersonCloud {
         @SerializedName("films")
         val films: ArrayList<String>
     ) : PersonCloud {
-        override fun map() = PersonCache(
+        override fun map() = CharacterCache(
             name,
             height,
             mass,

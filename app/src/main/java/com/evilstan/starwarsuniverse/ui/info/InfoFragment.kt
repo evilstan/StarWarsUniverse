@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import androidx.fragment.app.Fragment
-import com.evilstan.starwarsuniverse.cloud.core.App
 import com.evilstan.starwarsuniverse.databinding.FragmentInfoBinding
 import com.evilstan.starwarsuniverse.domain.PersonBundle
-import com.evilstan.starwarsuniverse.domain.cache.PersonCache
+import com.evilstan.starwarsuniverse.domain.models.CharacterCache
+import com.evilstan.starwarsuniverse.domain.models.CharacterUi
 
 class InfoFragment : Fragment(), View.OnClickListener {
 
@@ -26,7 +26,7 @@ class InfoFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentInfoBinding.inflate(inflater, container, false)
-        viewModel = InfoViewModel(App.instance)
+        viewModel = InfoViewModel()
         setInfo(personBundle.makePerson(requireArguments()))
         adapter = InfoAdapter(dataSet)
         binding.recyclerFilms.adapter = adapter
@@ -34,17 +34,17 @@ class InfoFragment : Fragment(), View.OnClickListener {
         return binding.root
     }
 
-    private fun setInfo(person: PersonCache) {
-        binding.nameValue.text = person.name
-        binding.heightValue.text = person.height
-        binding.weightValue.text = person.mass
-        binding.hairColorValue.text = person.hair_color
-        binding.skinColorValue.text = person.skin_color
-        binding.eyeColorValue.text = person.eye_color
-        binding.birtYearValue.text = person.birth_year
-        binding.genderValue.text = person.gender
-        dataSet.addAll(person.films)
-        binding.favoriteCheckbox.isChecked = person.favorite
+    private fun setInfo(character: CharacterUi) {
+        binding.nameValue.text = character.name
+        binding.heightValue.text = character.height
+        binding.weightValue.text = character.mass
+        binding.hairColorValue.text = character.hairColor
+        binding.skinColorValue.text = character.skinColor
+        binding.eyeColorValue.text = character.eyeColor
+        binding.birtYearValue.text = character.birthYear
+        binding.genderValue.text = character.gender
+        dataSet.addAll(character.films)
+        binding.favoriteCheckbox.isChecked = character.favorite
     }
 
     override fun onClick(view: View) {

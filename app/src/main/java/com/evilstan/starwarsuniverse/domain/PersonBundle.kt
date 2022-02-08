@@ -1,27 +1,28 @@
 package com.evilstan.starwarsuniverse.domain
 
 import android.os.Bundle
-import com.evilstan.starwarsuniverse.domain.cache.PersonCache
+import com.evilstan.starwarsuniverse.domain.models.Character
+import com.evilstan.starwarsuniverse.domain.models.CharacterUi
 import java.util.ArrayList
 
 class PersonBundle {
 
-    fun makeBundle(personCache: PersonCache):Bundle{
+    fun makeBundle(character: Character):Bundle{
         val bundle = Bundle()
-        bundle.putString("name", personCache.name)
-        bundle.putString("height", personCache.height)
-        bundle.putString("mass", personCache.mass)
-        bundle.putString("hair_color", personCache.hair_color)
-        bundle.putString("skin_color", personCache.skin_color)
-        bundle.putString("eye_color", personCache.eye_color)
-        bundle.putString("birth_year", personCache.birth_year)
-        bundle.putString("gender", personCache.gender)
-        bundle.putStringArrayList("films", personCache.films as ArrayList<String>)
-        bundle.putBoolean("favorite",personCache.favorite)
+        bundle.putString("name", character.name)
+        bundle.putString("height", character.height)
+        bundle.putString("mass", character.mass)
+        bundle.putString("hair_color", character.hairColor)
+        bundle.putString("skin_color", character.skinColor)
+        bundle.putString("eye_color", character.eyeColor)
+        bundle.putString("birth_year", character.birthYear)
+        bundle.putString("gender", character.gender)
+        bundle.putStringArrayList("films", character.films as ArrayList<String>)
+        bundle.putBoolean("favorite",character.favorite)
         return bundle
     }
 
-    fun makePerson(bundle: Bundle) = PersonCache(
+    fun makePerson(bundle: Bundle) = CharacterUi(
             bundle.getString("name")!!,
             bundle.getString("height")!!,
             bundle.getString("mass")!!,

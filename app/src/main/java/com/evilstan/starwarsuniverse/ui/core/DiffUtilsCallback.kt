@@ -1,11 +1,11 @@
 package com.evilstan.starwarsuniverse.ui.core
 
 import androidx.recyclerview.widget.DiffUtil
-import com.evilstan.starwarsuniverse.domain.cache.PersonCache
+import com.evilstan.starwarsuniverse.domain.models.Character
 
 class DiffUtilsCallback(
-    private val oldList: List<PersonCache>,
-    private val newList: List<PersonCache>
+    private val oldList: List<Character>,
+    private val newList: List<Character>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {

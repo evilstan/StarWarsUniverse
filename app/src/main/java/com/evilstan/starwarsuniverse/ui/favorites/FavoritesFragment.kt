@@ -10,7 +10,8 @@ import com.evilstan.starwarsuniverse.cloud.core.App
 import com.evilstan.starwarsuniverse.R
 import com.evilstan.starwarsuniverse.databinding.FragmentFavoritesBinding
 import com.evilstan.starwarsuniverse.domain.PersonBundle
-import com.evilstan.starwarsuniverse.domain.cache.PersonCache
+import com.evilstan.starwarsuniverse.domain.models.Character
+import com.evilstan.starwarsuniverse.domain.models.CharacterCache
 import com.evilstan.starwarsuniverse.ui.core.Adapter
 
 class FavoritesFragment : Fragment(),
@@ -28,7 +29,7 @@ class FavoritesFragment : Fragment(),
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
-        viewModel = FavoritesViewModel(App.instance)
+        viewModel = FavoritesViewModel()
         initComponents()
         return binding.root
     }
@@ -45,13 +46,13 @@ class FavoritesFragment : Fragment(),
             adapter.update(it) }
     }
 
-    override fun onPersonClick(person: PersonCache) {
+    override fun onPersonClick(character: Character) {
         val personBundle = PersonBundle()
         Navigation.findNavController(binding.favoritesRecycler)
-            .navigate(R.id.navi_info, personBundle.makeBundle(person))
+            .navigate(R.id.navi_info, personBundle.makeBundle(character))
     }
 
-    override fun onFavoriteClick(person: PersonCache, favorite: Boolean) {
-        viewModel.makeFavorite(person,favorite)
+    override fun onFavoriteClick(character: Character, favorite: Boolean) {
+        viewModel.makeFavorite(character,favorite)
     }
 }

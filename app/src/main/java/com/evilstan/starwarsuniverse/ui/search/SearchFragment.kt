@@ -14,10 +14,14 @@ import com.evilstan.starwarsuniverse.R
 import com.evilstan.starwarsuniverse.cloud.core.App
 import com.evilstan.starwarsuniverse.databinding.FragmentSearchBinding
 import com.evilstan.starwarsuniverse.domain.PersonBundle
-import com.evilstan.starwarsuniverse.domain.cache.PersonCache
+import com.evilstan.starwarsuniverse.domain.models.CharacterCache
+import com.evilstan.starwarsuniverse.domain.usecase.SaveToFavoritesUseCase
+import com.evilstan.starwarsuniverse.domain.usecase.SearchCharacterByIdUseCase
+import com.evilstan.starwarsuniverse.domain.usecase.ShowCharacterDetailsUseCase
 import com.evilstan.starwarsuniverse.ui.core.Adapter
 import com.evilstan.starwarsuniverse.ui.core.ErrorMessage
 import com.evilstan.starwarsuniverse.ui.core.Status
+import com.evilstan.starwarsuniverse.domain.models.Character
 
 
 class SearchFragment : Fragment(),
@@ -26,7 +30,11 @@ class SearchFragment : Fragment(),
 
     private lateinit var adapter: Adapter
     private lateinit var viewModel: SearchViewModel
-    private var dataset = mutableListOf<PersonCache>()
+    private var dataset = mutableListOf<CharacterCache>()
+
+    private val searchUseCase = SearchCharacterByIdUseCase()
+    private var saveTiFavoritesUseCase = SaveToFavoritesUseCase()
+    private val showCharacterDetailsUseCase = ShowCharacterDetailsUseCase()
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
@@ -37,7 +45,7 @@ class SearchFragment : Fragment(),
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
-        viewModel = SearchViewModel(App.instance)
+        viewModel = SearchViewModel()
         initComponents()
         observe()
         return binding.root
@@ -52,6 +60,7 @@ class SearchFragment : Fragment(),
         adapter = Adapter(this, this)
         binding.searchRecycler.adapter = adapter
         binding.editText.addTextChangedListener(textWatcher)
+
     }
 
     private val textWatcher = object : TextWatcher {
@@ -78,7 +87,7 @@ class SearchFragment : Fragment(),
         showProgressBar(true)
     }
 
-    private fun onResponseSuccess(data: List<PersonCache>?) {
+    private fun onResponseSuccess(data: List<CharacterCache>?) {
         if (data != null) {
             adapter.update(data)
         }
@@ -101,18 +110,18 @@ class SearchFragment : Fragment(),
         binding.progressBar.visibility = visibility
     }
 
-    override fun onPersonClick(person: PersonCache) {
-        viewModel.addFilms(person)
+    override fun onPersonClick(character: Character) {
+        viewModel.addFilms(character)
         viewModel.filmedPerson.observe(viewLifecycleOwner) {
             Navigation.findNavController(binding.editText)
-                .navigate(R.id.navi_info, PersonBundle().makeBundle(person))
+                .navigate(R.id.navi_info, PersonBundle().makeBundle(character))
         }
     }
 
-    override fun onFavoriteClick(person: PersonCache, favorite: Boolean) {
-        viewModel.addFilms(person)
+    override fun onFavoriteClick(character: Character, favorite: Boolean) {
+        viewModel.addFilms(character)
         viewModel.filmedPerson.observe(viewLifecycleOwner) {
-            viewModel.makeFavorite(person, favorite)
+            viewModel.makeFavorite(character, favorite)
         }
     }
 

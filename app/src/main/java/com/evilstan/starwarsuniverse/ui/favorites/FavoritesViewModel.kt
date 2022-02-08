@@ -4,6 +4,6 @@ import android.app.Application
 import android.content.Context
 import com.evilstan.starwarsuniverse.ui.core.BaseViewModel
 
-class FavoritesViewModel(application: Application) : BaseViewModel(application) {
+class FavoritesViewModel : BaseViewModel() {
     val personsFromDb = cachedPersons
 }

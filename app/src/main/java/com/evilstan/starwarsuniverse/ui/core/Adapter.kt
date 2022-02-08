@@ -7,7 +7,7 @@ import android.widget.CheckBox
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.evilstan.starwarsuniverse.databinding.ListItemStarBinding
-import com.evilstan.starwarsuniverse.domain.cache.PersonCache
+import com.evilstan.starwarsuniverse.domain.models.Character
 
 class Adapter(
     private val onPersonClickListener: OnPersonClickListener,
@@ -16,9 +16,9 @@ class Adapter(
 
     private var _binding: ListItemStarBinding? = null
     private val binding get() = _binding!!
-    private var dataSet = listOf<PersonCache>()
+    private var dataSet = listOf<Character>()
 
-    fun update(data: List<PersonCache>) {
+    fun update(data: List<Character>) {
         val diffUtilsCallback = DiffUtilsCallback(dataSet, data)
         val diffResult = DiffUtil.calculateDiff(diffUtilsCallback)
         dataSet = data
@@ -44,24 +44,24 @@ class Adapter(
         view: View
     ) : RecyclerView.ViewHolder(view) {
 
-        fun setCharacter(person: PersonCache) {
+        fun setCharacter(character: Character) {
 
-            binding.recyclerItemStar.text = person.name
-            binding.favoriteCheckbox.isChecked = person.favorite
+            binding.recyclerItemStar.text = character.name
+            binding.favoriteCheckbox.isChecked = character.favorite
 
             binding.favoriteCheckbox.setOnClickListener { view ->
                 view as CheckBox
-                onFavoriteClickListener.onFavoriteClick(person, view.isChecked)
+                onFavoriteClickListener.onFavoriteClick(character, view.isChecked)
             }
         }
     }
 
     interface OnPersonClickListener {
-        fun onPersonClick(person: PersonCache)
+        fun onPersonClick(character: Character)
     }
 
     interface OnFavoriteClickListener {
-        fun onFavoriteClick(person: PersonCache, favorite: Boolean)
+        fun onFavoriteClick(character: Character, favorite: Boolean)
     }
 
 }

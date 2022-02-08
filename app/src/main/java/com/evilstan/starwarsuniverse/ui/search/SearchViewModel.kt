@@ -1,7 +1,6 @@
 package com.evilstan.starwarsuniverse.ui.search
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.evilstan.starwarsuniverse.cloud.core.NetModule
@@ -9,7 +8,9 @@ import com.evilstan.starwarsuniverse.cloud.core.StarWarsApi
 import com.evilstan.starwarsuniverse.cloud.dictionary.FilmCloud
 import com.evilstan.starwarsuniverse.cloud.dictionary.PersonCloud
 import com.evilstan.starwarsuniverse.cloud.dictionary.ResponseWrapper
-import com.evilstan.starwarsuniverse.domain.cache.PersonCache
+import com.evilstan.starwarsuniverse.domain.models.CharacterCache
+import com.evilstan.starwarsuniverse.domain.models.Character
+import com.evilstan.starwarsuniverse.domain.models.CharacterUi
 import com.evilstan.starwarsuniverse.ui.core.BaseViewModel
 import com.evilstan.starwarsuniverse.ui.core.ErrorMessage
 import com.evilstan.starwarsuniverse.ui.core.Event
@@ -19,11 +20,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.net.UnknownHostException
 
-class SearchViewModel(application: Application) : BaseViewModel(application) {
+class SearchViewModel: BaseViewModel() {
 
     private val debounce = 500L
-    val mappedPersons = MutableLiveData<Event<List<PersonCache>>>()
-    val filmedPerson = MutableLiveData<PersonCache>()
+    val mappedPersons = MutableLiveData<Event<List<CharacterCache>>>()
+    val filmedPerson = MutableLiveData<Character>()
 
     private var starWarsApi: StarWarsApi = NetModule().service(StarWarsApi::class.java)
     private var searchJob: Job? = null
@@ -64,19 +65,19 @@ class SearchViewModel(application: Application) : BaseViewModel(application) {
         }
     }
 
-    private suspend fun map(response: List<PersonCloud>): List<PersonCache> {
+    private suspend fun map(response: List<PersonCloud>): List<CharacterCache> {
         val result = response.map { it.map() }
         result.forEach { it.favorite = dbContains(it.name) }
         return result
     }
 
 
-    fun addFilms(personCache: PersonCache) {
+    fun addFilms(character: Character) {
         mappedPersons.postValue(Event.loading())
 
         this.viewModelScope.launch(Dispatchers.IO) {
-            personCache.films = personCache.films.map { (requestFilms(it).toString()) }
-            filmedPerson.postValue(personCache)
+            character.films = character.films.map { (requestFilms(it).toString()) }
+            filmedPerson.postValue(character)
         }
     }
 

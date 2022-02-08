@@ -1,4 +1,4 @@
-package com.evilstan.starwarsuniverse.domain.database
+package com.evilstan.starwarsuniverse.data.database
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
